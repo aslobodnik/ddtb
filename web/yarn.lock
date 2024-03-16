@@ -1501,7 +1501,7 @@ universalify@^2.0.0:
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.1.tgz#168efc2180964e6386d061e094df61afe239b18d"
   integrity sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==
 
-viem@^2.7.10:
+viem@^2.7.10, viem@^2.8.10:
   version "2.8.10"
   resolved "https://registry.yarnpkg.com/viem/-/viem-2.8.10.tgz#c81cf6ec6fdf20a5fac5c84fc8aff0d5dce9d666"
   integrity sha512-rhIdRXWLPMUPjL2aI7oYNn4PrgEimbf2rxEkTjty0L+ZBIvPgKAOZFUeStpAfdWouTDO4yM84Xk4Hh2hrwiK9A==

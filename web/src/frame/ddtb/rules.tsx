@@ -1,7 +1,6 @@
-import { Button } from "frog"
-import { CustomFrameContext } from "."
+import { Button, FrameContext } from "frog"
 
-export const rulesScreen1 = (c: CustomFrameContext) => {
+export const rulesScreen1 = (c: FrameContext) => {
 	return c.res({
     image: (
       <div style={{ display: 'flex', color: 'white', fontSize: '50' }}>
@@ -15,7 +14,7 @@ export const rulesScreen1 = (c: CustomFrameContext) => {
   })
 }
 
-export const rulesScreen2 = (c: CustomFrameContext) => {
+export const rulesScreen2 = (c: FrameContext) => {
 	return c.res({
     image: (
       <div style={{ display: 'flex', color: 'white', fontSize: '50' }}>
@@ -29,7 +28,7 @@ export const rulesScreen2 = (c: CustomFrameContext) => {
   })
 }
 
-export const rulesScreen3 = (c: CustomFrameContext) => {
+export const rulesScreen3 = (c: FrameContext) => {
 	return c.res({
     image: (
       <div style={{ display: 'flex', color: 'white', fontSize: '50' }}>
@@ -43,7 +42,7 @@ export const rulesScreen3 = (c: CustomFrameContext) => {
   })
 }
 
-export const rulesScreen4 = (c: CustomFrameContext) => {
+export const rulesScreen4 = (c: FrameContext) => {
 	return c.res({
     image: (
       <div style={{ display: 'flex', color: 'white', fontSize: '50' }}>
