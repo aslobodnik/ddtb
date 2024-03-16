@@ -13,6 +13,7 @@
     "viem": "^2.8.10"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240314.0",
     "wrangler": "latest"
   }
 }
