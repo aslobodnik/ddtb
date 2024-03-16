@@ -1,8 +1,6 @@
-import { Button } from "frog"
-import { CustomFrameContext } from "."
+import { Button, FrameContext } from "frog"
 
-export const statusScreen = (c: CustomFrameContext) => {
-  
+export const statusScreen = async (c: FrameContext) => {
 	const prevUser = 'limes.eth' // placeholder string
 	const currentUser = 'slobo.eth' // placeholder string
 	const timeRemaining = '00:02:56' // placeholder time

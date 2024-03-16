@@ -1,7 +1,6 @@
-import { Button } from "frog"
-import { CustomFrameContext } from "."
+import { Button, FrameContext } from "frog"
 
-export const missingScreen = (c: CustomFrameContext) => {
+export const missingScreen = (c: FrameContext) => {
   
 	const prevUser = 'limes.eth' // placeholder string
 	const currentUser = 'slobo.eth' // placeholder string

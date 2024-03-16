@@ -1,8 +1,7 @@
-import { TextInput } from "frog";
+import { FrameContext, TextInput } from "frog";
 import { Button } from "frog";
-import { CustomFrameContext } from ".";
 
-export const passScreen = (c: CustomFrameContext) => {
+export const passScreen = (c: FrameContext) => {
 	return c.res({
     image: (
       <div style={{ 
