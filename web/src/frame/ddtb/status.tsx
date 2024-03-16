@@ -5,11 +5,13 @@ export const statusScreen = (c: CustomFrameContext) => {
   
 	const prevUser = 'limes.eth' // placeholder string
 	const currentUser = 'slobo.eth' // placeholder string
+	const timeRemaining = '00:02:56' // placeholder time
 	
 	return c.res({
     image: (
       <div style={{ 
-				display: 'flex', 
+				display: 'flex',
+				flexDirection: 'column',
 				width: '100vw',
 				height: '100vh',
 				color: 'white', 
@@ -17,11 +19,16 @@ export const statusScreen = (c: CustomFrameContext) => {
 				alignItems: 'center',
 				justifyContent: 'center',
 			}}>
-				{prevUser} passed the base to {currentUser}
+				<div style={{
+					display: 'flex'
+				}}>{prevUser} passed the base to {currentUser}</div>
+				<div style={{
+					display: 'flex'
+				}}>{currentUser} has {timeRemaining} to pass the BASE</div>
 			</div>
     ),
     intents: [
-      <Button action={'/'}>Home</Button>,
+      <Button action={'/rules-screen-1'}>Rules</Button>,
       <Button.Link href={`https://warpcast.com/${currentUser}`}>Remind {currentUser}</Button.Link>,
     ]
   })
