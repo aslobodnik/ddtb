@@ -10,11 +10,11 @@ export const statusScreen = (c: CustomFrameContext) => {
     image: (
       <div style={{ 
 				display: 'flex', 
-				flexDirection: 'column', 
+				width: '100vw',
+				height: '100vh',
 				color: 'white', 
 				fontSize: '50',
 				alignItems: 'center',
-				backgroundColor: 'red',
 				justifyContent: 'center',
 			}}>
 				{prevUser} passed the base to {currentUser}
