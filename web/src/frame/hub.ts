@@ -96,18 +96,6 @@ export async function getUserDataByFid(fid: number, type: number) {
   return data.data.userDataBody.value
 }
 
-export async function checkIfUserHasBase(address: Address) {
-	const res = await fetch(
-		``,
-	)
-	const data = (await res.json()) as {
-		data: {
-			hasBase: boolean
-		}
-	}
-	return data.data.hasBase
-}
-
 export async function fetchTransfers() {
 	const query = `
 		query MyQuery {
