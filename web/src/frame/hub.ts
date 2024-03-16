@@ -108,7 +108,7 @@ export async function checkIfUserHasBase(address: Address) {
 	return data.data.hasBase
 }
 
-export async function getGameState() {
+export async function fetchTransfers() {
 	const query = `
 		query MyQuery {
 			baseToken(id: "0") {
