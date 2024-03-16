@@ -4,14 +4,7 @@ import { statusScreen } from './status'
 import { missingScreen } from './missing'
 import { rulesScreen1, rulesScreen2, rulesScreen3, rulesScreen4 } from './rules'
 
-type FrogOptions = {
-  // Bindings: { ZEROX_API_KEY?: string }
-}
-
-export type CustomFrameContext = FrameContext<FrogOptions>
-export type CustomTransactionContext = TransactionContext<FrogOptions>
-
-export const app = new Frog<FrogOptions>({
+export const app = new Frog({
 	browserLocation: '/ddtb'
 })
 
