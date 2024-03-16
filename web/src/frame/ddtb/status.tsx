@@ -1,6 +1,5 @@
 import { Button, FrameContext } from "frog"
-import { getEthAddressFromFid } from "../hub"
-import { viemClient } from "../viemClient"
+import { getEthAddressFromFid, getGameState } from "../hub"
 
 export const statusScreen = async (c: FrameContext) => {
 
@@ -14,10 +13,42 @@ export const statusScreen = async (c: FrameContext) => {
 	// check if the user currently has the base
 	const hasBase = true // placeholder value   // viemClient.readContract({...})
 
-	const passedFrom = 'limes.eth' // placeholder string
-	const passedTo = 'slobo.eth' // placeholder string
-	const timeRemaining = '00:02:56' // placeholder time
+	const { passedFrom, passedTo, timeRemaining } = await getGameState()
+
+	const isGameActive = checkIsGameActive(timeRemaining)
+	if (isGameActive) {
+		return c.res({
+			image: (
+				<div style={{ 
+					display: 'flex',
+					flexDirection: 'column',
+					width: '100vw',
+					height: '100vh',
+					color: 'white', 
+					fontSize: '50',
+					alignItems: 'center',
+					justifyContent: 'center',
+				}}>
+					<div style={{
+						display: 'flex'
+					}}>{passedFrom} passed the base to {passedTo}</div>
+					<div style={{
+						display: 'flex'
+					}}>{passedTo} has {timeRemaining} to pass the BASE</div>
+				</div>
+			),
+			intents: [
+				<Button action='/rules-screen-1'>Rules</Button>,
+				hasBase ? (
+					<Button action='/pass'>Pass</Button>
+				) : (
+					<Button.Link href={`https://warpcast.com/${passedTo}`}>Remind {passedTo}</Button.Link>
+				),
+			]
+		})
+	}
 	
+	// return this if there is no active game
 	return c.res({
     image: (
       <div style={{ 
@@ -35,16 +66,12 @@ export const statusScreen = async (c: FrameContext) => {
 				}}>{passedFrom} passed the base to {passedTo}</div>
 				<div style={{
 					display: 'flex'
-				}}>{passedTo} has {timeRemaining} to pass the BASE</div>
+				}}>{passedTo} dropped it</div>
 			</div>
     ),
     intents: [
       <Button action='/rules-screen-1'>Rules</Button>,
-			hasBase ? (
-				<Button action='/pass'>Pass</Button>
-			) : (
-				<Button.Link href={`https://warpcast.com/${passedTo}`}>Remind {passedTo}</Button.Link>
-			),
+			<Button action="/pass">Start New Game</Button>,
     ]
   })
 }
