@@ -19,7 +19,7 @@ export const passScreen = (c: FrameContext) => {
     intents: [
 			<TextInput placeholder="dwr.eth..." />,
 			<Button action="/">Back</Button>,
-      <Button.Transaction target="/tx">Pass</Button.Transaction>,
+      <Button.Transaction target="/transaction">Pass</Button.Transaction>,
     ]
   })
 }

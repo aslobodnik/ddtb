@@ -1,3 +1,5 @@
+import { Address } from "viem"
+
 const BASE_URL = 'https://api.hub.wevm.dev'
 
 const options: RequestInit<RequestInitCfProperties> = {
@@ -62,7 +64,7 @@ export async function getEthAddressFromFid(fid: number) {
       message.data.verificationAddAddressBody.protocol === 'PROTOCOL_ETHEREUM'
   )
 
-  return ethAddresses[0].data.verificationAddAddressBody.address
+  return ethAddresses[0].data.verificationAddAddressBody.address as Address
 }
 
 export async function getUserDataByFid(fid: number, type: number) {
@@ -90,4 +92,30 @@ export async function getUserDataByFid(fid: number, type: number) {
   }
 
   return data.data.userDataBody.value
+}
+
+export async function checkIfUserHasBase(address: Address) {
+	const res = await fetch(
+		``,
+	)
+	const data = (await res.json()) as {
+		data: {
+			hasBase: boolean
+		}
+	}
+	return data.data.hasBase
+}
+
+export async function getGameState() {
+	const res = await fetch(
+		``,
+	)
+	const data = (await res.json()) as {
+		data: {
+			passFrom: string
+			passTo: string
+			timeRemaining: Date
+		}
+	}
+	return { passedFrom: data.data.passFrom, passedTo: data.data.passTo, timeRemaining: data.data.timeRemaining }
 }
