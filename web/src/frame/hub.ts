@@ -1,4 +1,6 @@
 import { Address } from "viem"
+import { PONDER_URL } from "../config"
+import { BaseToken } from "./dataReqTypes"
 
 const BASE_URL = 'https://api.hub.wevm.dev'
 
@@ -107,15 +109,29 @@ export async function checkIfUserHasBase(address: Address) {
 }
 
 export async function getGameState() {
+	const query = `
+		query MyQuery {
+			baseToken(id: "0") {
+					id
+					transfers {
+						items {
+							from
+							to
+							timestamp
+						}
+					}
+			}}
+	`
 	const res = await fetch(
-		``,
-	)
-	const data = (await res.json()) as {
-		data: {
-			passFrom: string
-			passTo: string
-			timeRemaining: Date
+		PONDER_URL, {
+			method: 'POST',
+			headers: {
+        'Content-Type': 'application/json',
+      },
+			body: JSON.stringify({ query: query }),
 		}
-	}
-	return { passedFrom: data.data.passFrom, passedTo: data.data.passTo, timeRemaining: data.data.timeRemaining }
+	)
+	const data = (await res.json()) as { data: BaseToken }
+	const transfers = data.data.transfers.items
+	return transfers
 }
