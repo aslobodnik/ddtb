@@ -14,8 +14,8 @@ export const statusScreen = async (c: FrameContext) => {
 	// check if the user currently has the base
 	const hasBase = true // placeholder value   // viemClient.readContract({...})
 
-	const prevUser = 'limes.eth' // placeholder string
-	const currentUser = 'slobo.eth' // placeholder string
+	const passedFrom = 'limes.eth' // placeholder string
+	const passedTo = 'slobo.eth' // placeholder string
 	const timeRemaining = '00:02:56' // placeholder time
 	
 	return c.res({
@@ -32,10 +32,10 @@ export const statusScreen = async (c: FrameContext) => {
 			}}>
 				<div style={{
 					display: 'flex'
-				}}>{prevUser} passed the base to {currentUser}</div>
+				}}>{passedFrom} passed the base to {passedTo}</div>
 				<div style={{
 					display: 'flex'
-				}}>{currentUser} has {timeRemaining} to pass the BASE {fid}</div>
+				}}>{passedTo} has {timeRemaining} to pass the BASE</div>
 			</div>
     ),
     intents: [
@@ -43,7 +43,7 @@ export const statusScreen = async (c: FrameContext) => {
 			hasBase ? (
 				<Button action='/pass'>Pass</Button>
 			) : (
-				<Button.Link href={`https://warpcast.com/${currentUser}`}>Remind {currentUser}</Button.Link>
+				<Button.Link href={`https://warpcast.com/${passedTo}`}>Remind {passedTo}</Button.Link>
 			),
     ]
   })
