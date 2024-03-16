@@ -12,7 +12,7 @@ export type CustomFrameContext = FrameContext<FrogOptions>
 export type CustomTransactionContext = TransactionContext<FrogOptions>
 
 export const app = new Frog<FrogOptions>({
-	browserLocation: '/pass'
+	browserLocation: '/ddtb'
 })
 
 app.frame('/', statusScreen) // status or missing; depending on if there is an active game
