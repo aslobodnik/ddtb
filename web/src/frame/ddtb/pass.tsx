@@ -13,12 +13,12 @@ export const passScreen = (c: FrameContext) => {
 				backgroundColor: 'red',
 				justifyContent: 'center',
 			}}>
-				Enter the username of the user you want to pass the base to
+				Enter the username of the user you want to pass to
 			</div>
     ),
     intents: [
 			<TextInput placeholder="dwr.eth..." />,
-      <Button action={'/start'}>Pass</Button>,
+      <Button.Transaction target="/tx">Pass</Button.Transaction>,
     ]
   })
 }

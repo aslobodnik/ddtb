@@ -1,6 +1,15 @@
 import { Button, FrameContext } from "frog"
+import { viemClient } from "../viemClient"
+import { CONTRACT_ADDRESS } from "../../config"
 
 export const statusScreen = async (c: FrameContext) => {
+
+	const data = await viemClient.readContract({
+		address: CONTRACT_ADDRESS,
+		abi: (['abi']), // placeholder abi
+		functionName: '',
+	})
+	
 	const prevUser = 'limes.eth' // placeholder string
 	const currentUser = 'slobo.eth' // placeholder string
 	const timeRemaining = '00:02:56' // placeholder time
@@ -26,7 +35,10 @@ export const statusScreen = async (c: FrameContext) => {
 			</div>
     ),
     intents: [
-      <Button action={'/rules-screen-1'}>Rules</Button>,
+      <Button action='/rules-screen-1'>Rules</Button>,
+			// if they have the BASE
+			<Button action='/pass'>Pass</Button>,
+			// if they don't have the BASE
       <Button.Link href={`https://warpcast.com/${currentUser}`}>Remind {currentUser}</Button.Link>,
     ]
   })
