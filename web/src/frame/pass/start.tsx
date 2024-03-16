@@ -11,7 +11,7 @@ export const startScreen = (c: CustomFrameContext) => {
     ),
     intents: [
       <Button action={'/rules-screen-1'}>Rules</Button>,
-      <Button action={'/start'}>Start</Button>,
+      <Button action={'/status'}>Start</Button>,
     ]
   })
 }
