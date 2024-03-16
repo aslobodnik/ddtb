@@ -1,9 +1,8 @@
 import { FrameContext, Frog, TransactionContext } from 'frog'
 
-import { startScreen } from './start'
-import { rulesScreen1, rulesScreen2, rulesScreen3, rulesScreen4 } from './rules'
 import { statusScreen } from './status'
 import { missingScreen } from './missing'
+import { rulesScreen1, rulesScreen2, rulesScreen3, rulesScreen4 } from './rules'
 
 type FrogOptions = {
   // Bindings: { ZEROX_API_KEY?: string }
@@ -16,8 +15,7 @@ export const app = new Frog<FrogOptions>({
 	browserLocation: '/pass'
 })
 
-app.frame('/', startScreen) // stats or missing; depending on if there is an active game
-app.frame('/status', statusScreen)
+app.frame('/', statusScreen) // status or missing; depending on if there is an active game
 app.frame('/rules-screen-1', rulesScreen1)
 app.frame('/rules-screen-2', rulesScreen2)
 app.frame('/rules-screen-3', rulesScreen3)
