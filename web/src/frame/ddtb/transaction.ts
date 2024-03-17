@@ -27,15 +27,6 @@ export const transaction = async (c: TransactionContext) => {
     abi: CONTRACT_ABI,
     chainId: 'eip155:8453',
     functionName: 'transferFrom',
-    args: [passedTo, userAddress ?? inputText as Address, 0n],
+    args: [passedTo, userAddress ?? inputText as Address, 1n],
   })
-
-
-	return c.contract({
-		to: CONTRACT_ADDRESS,
-		abi: CONTRACT_ABI,
-		chainId: 'eip155:8453',
-		functionName: 'transferFrom',
-		args: [passedTo, userAddress ?? inputText as Address, 0n],
-	})
 }

@@ -2,7 +2,7 @@ import { Address } from "viem"
 import { fetchTransfers } from "./hub"
 
 export async function getCurrentGameState() {
-	const transfers = await fetchTransfers(0) // hardcode tokenId 0
+	const transfers = await fetchTransfers(1) // hardcode tokenId 0
 	console.log(transfers)
 	const maxTimestamp = transfers.reduce((a, b) => Math.max(a, b.timestamp), -Infinity)
 	console.log(maxTimestamp)
