@@ -5,8 +5,8 @@ import { ruleStyles } from "./styles";
 
 export const statusScreen = async (c: FrameContext) => {
   
-  const pfp1 = "https://gregskril.com/img/profile.jpg";
-  const pfp2 = "https://euc.li/goerli/swagalicious.eth";
+  const pfp1 = "https://i.imgur.com/S7jfJYg.png";
+  const pfp2 = "https://i.imgur.com/mFsBea8.png";
   const uniqueAddresses = 20;
   const aliveTime = "2 days 23 hours and 21 minutes";
 
@@ -70,7 +70,6 @@ export const statusScreen = async (c: FrameContext) => {
 							width: "4rem",
 							height: "4rem",
 							objectFit: "cover",
-							border: "2px solid black",
 							borderRadius: 1000,
 						}}
         	/>
@@ -84,7 +83,6 @@ export const statusScreen = async (c: FrameContext) => {
 							width: "4rem",
 							height: "4rem",
 							objectFit: "cover",
-							border: "2px solid black",
 							borderRadius: 1000,
 						}}
 					/>
