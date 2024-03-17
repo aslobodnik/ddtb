@@ -17,9 +17,10 @@ export const statusScreen = async (c: FrameContext) => {
 	// get current game state
 	const { passedFrom, passedTo, timestamp } = await getCurrentGameState()
 
+	const burnerAddressPattern = new RegExp('/0x000000000000000/')
 	let fromUser: string | null = ''
 	let toUser = ''
-	if (fromUser === "0x0000000000000000000000000000000000000000") {
+	if (burnerAddressPattern.test("0x0000000000000000000000000000000000000000")) {
 		const name = await fetchEnsNamesFromAddresses([passedTo])
 		fromUser = null
 		toUser = name.filter((name) => name.owner === passedTo)[0].name
