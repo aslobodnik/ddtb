@@ -39,7 +39,6 @@ export const statusScreen = async (c: FrameContext) => {
 	const isGameActive = checkIfGameIsActive(timeRemaining, 12)
 	
 	const formattedTimeString = formatTimeRemaining(timeRemaining)
-        
   if (isGameActive) {
     return c.res({
       image: (
@@ -56,7 +55,6 @@ export const statusScreen = async (c: FrameContext) => {
             src="https://i.imgur.com/O7Ncgpv.png"
             style={{ position: "absolute", left: 0, bottom: 0, width: "100%" }}
           />
-
 					<img
 						src={pfp1}
 						style={{
