@@ -1,34 +1,45 @@
-import { Button, FrameContext } from "frog";
-import { getEthAddressFromFid, getGameState } from "../hub";
+import { Button, FrameContext } from "frog"
+import { fetchEnsNamesFromAddresses, fetchEthAddressesFromFid } from "../hub"
+import { getCurrentGameState, getTimestampInSeconds, checkIfGameIsActive, formatTimeRemaining } from "../utils"
 import { ruleStyles } from "./styles";
 
 export const statusScreen = async (c: FrameContext) => {
-  // get user fid from signed POST req
-  const { frameData } = c;
-  const { fid } = frameData as { fid: number };
-
-  // get verified addresses from fid
-  // const userAddress = await getEthAddressFromFid(fid);
-
-  // check if the user currently has the base
-  const hasBase = true; // placeholder value   // viemClient.readContract({...})
-
-  // const { passedFrom, passedTo, timeRemaining } = await getGameState();
-
-  // const isGameActive = checkIsGameActive(timeRemaining);
-
-  const isGameActive = false;
-  const passedFrom = "ncale.eth";
-  const passedTo = "greg";
-  const timeRemaining = "1 hour and 10 minutes";
-
+  
   const pfp1 = "https://gregskril.com/img/profile.jpg";
   const pfp2 = "https://euc.li/goerli/swagalicious.eth";
-  const fromUser = "ncale.eth";
-  const toUser = "greg";
   const uniqueAddresses = 20;
   const aliveTime = "2 days 23 hours and 21 minutes";
 
+  // get user fid from signed POST req
+  const { frameData } = c
+  const { fid } = frameData as { fid: number }
+	
+	// get current game state
+	const { passedFrom, passedTo, timestamp } = await getCurrentGameState()
+
+	let fromUser: string | null = ''
+	let toUser = ''
+	if (fromUser === "0x0000000000000000000000000000000000000000") {
+		const name = await fetchEnsNamesFromAddresses([passedTo])
+		fromUser = null
+		toUser = name.filter((name) => name.owner === passedTo)[0].name
+	} else {
+		const names = await fetchEnsNamesFromAddresses([passedFrom, passedTo])
+		fromUser = names.filter((name) => name.owner === passedFrom)[0].name
+		toUser = names.filter((name) => name.owner === passedTo)[0].name
+	}
+	
+	// get all user verified addresses
+	const userAddresses = await fetchEthAddressesFromFid(fid)
+	// return true if one of the addresses matches
+	const hasBase = userAddresses.some((address) => (passedTo === address.userAssociatedAddresses))
+
+	// game is active if time remaining is less than 12 hours
+	const timeRemaining = (43200 - (getTimestampInSeconds() - timestamp))
+	const isGameActive = checkIfGameIsActive(timeRemaining, 12)
+	
+	const formattedTimeString = formatTimeRemaining(timeRemaining)
+        
   if (isGameActive) {
     return c.res({
       image: (
@@ -82,7 +93,7 @@ export const statusScreen = async (c: FrameContext) => {
               flexDirection: "column",
             }}
           >
-              {passedFrom} passed the base to {passedTo}
+              {fromUser} passed the base to {toUser}
           </div>
 
           <span
@@ -94,7 +105,7 @@ export const statusScreen = async (c: FrameContext) => {
               top: 380,
             }}
           >
-            {passedTo} has {timeRemaining} to pass the base
+            {toUser} has {timeRemaining} to pass the base
           </span>
         </div>
       ),
@@ -103,7 +114,7 @@ export const statusScreen = async (c: FrameContext) => {
         hasBase ? (
           <Button action="/pass">Pass</Button>
         ) : (
-          <Button.Link href={`https://warpcast.com/~/compose?text=Hey%20@${passedTo}%2C%20don%27t%20drop%20the%20Base`}>
+          <Button.Link href={`https://warpcast.com/~/compose?text=Hey%20@${toUser}%2C%20don%27t%20drop%20the%20Base`}>
             Let Them Know
           </Button.Link>
         ),

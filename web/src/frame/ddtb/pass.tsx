@@ -17,6 +17,7 @@ export const passScreen = (c: FrameContext) => {
       >
         Enter the username of the user you want to pass to
       </div>
+
     ),
     intents: [
       <TextInput placeholder="dwr.eth..." />,
