@@ -20,15 +20,11 @@ export const transaction = async (c: TransactionContext) => {
 		console.log(err)
 	}
 
-	try {
-		return c.contract({
-			to: CONTRACT_ADDRESS,
-			abi: CONTRACT_ABI,
-			chainId: 'eip155:8453',
-			functionName: 'transferFrom',
-			args: [passedTo, userAddress ?? inputText as Address, 0n],
-		})
-	} catch (err) {
-		console.log(err)
-	}
+	return c.contract({
+		to: CONTRACT_ADDRESS,
+		abi: CONTRACT_ABI,
+		chainId: 'eip155:8453',
+		functionName: 'transferFrom',
+		args: [passedTo, userAddress ?? inputText as Address, 0n],
+	})
 }
