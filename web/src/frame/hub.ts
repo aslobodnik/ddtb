@@ -1,5 +1,5 @@
 import { Address } from "viem"
-import { AIRSTACK_URL, AIRSTACK_API_KEY, PONDER_URL } from "../config"
+import { AIRSTACK_URL, PONDER_URL } from "../config"
 import { AirstackEnsData, AirstackEthAddressesData, PonderData } from "./dataReqTypes"
 
 export async function fetchEthAddressesFromFid(fid: number) {
@@ -50,6 +50,41 @@ export async function fetchEnsNamesFromAddresses(addresses: Address[]) {
 	)
   const data = (await res.json()) as AirstackEnsData
   return data.data.Domains.Domain
+}
+
+export async function fetchAddressFromEnsName(ensName: string) {
+	const query = `
+	query MyQuery {
+		Domains(input: {filter: {name: {_eq: "${ensName}"}}, blockchain: ethereum}) {
+			Domain {
+				owner
+			}
+		}
+	}
+	`
+	const res = await fetch(
+		AIRSTACK_URL, {
+			method: 'POST',
+			headers: {
+        'Content-Type': 'application/json'
+      },
+			body: JSON.stringify({ query }),
+		}
+	)
+  const data = (await res.json()) as AirstackEnsResponse
+  return data.data.Domains.Domain
+}
+interface AirstackEnsResponse {
+	data: AirstackEns
+}
+interface AirstackEns {
+	Domains: EnsDomains
+}
+interface EnsDomains {
+	Domain: EnsDomain[]
+}
+export interface EnsDomain {
+	owner: Address
 }
 
 export async function fetchTransfers(tokenId: number) {
