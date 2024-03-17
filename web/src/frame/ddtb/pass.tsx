@@ -11,13 +11,12 @@ export const passScreen = (c: FrameContext) => {
           color: "white",
           fontSize: "50",
           alignItems: "center",
-          backgroundColor: "red",
+          backgroundColor: "white",
           justifyContent: "center",
         }}
       >
-        Enter the username of the user you want to pass to
+        Enter the address of the user you want to pass the BASE to
       </div>
-
     ),
     intents: [
       <TextInput placeholder="dwr.eth..." />,
