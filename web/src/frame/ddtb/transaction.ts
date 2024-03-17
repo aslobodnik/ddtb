@@ -11,6 +11,7 @@ export const transaction = async (c: TransactionContext) => {
 
 	let userAddressReturn: EnsDomain[]
 	let userAddress: Address | undefined = undefined
+
 	try {
 		if (inputText?.slice(-4) === '.eth') {
 			userAddressReturn = await fetchAddressFromEnsName(inputText ?? '')
@@ -20,15 +21,21 @@ export const transaction = async (c: TransactionContext) => {
 		console.log(err)
 	}
 
-	try {
-		return c.contract({
-			to: CONTRACT_ADDRESS,
-			abi: CONTRACT_ABI,
-			chainId: 'eip155:8453',
-			functionName: 'transferFrom',
-			args: [passedTo, userAddress ?? inputText as Address, 0n],
-		})
-	} catch (err) {
-		console.log(err)
-	}
+
+  return c.contract({
+    to: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI,
+    chainId: 'eip155:8453',
+    functionName: 'transferFrom',
+    args: [passedTo, userAddress ?? inputText as Address, 0n],
+  })
+
+
+	return c.contract({
+		to: CONTRACT_ADDRESS,
+		abi: CONTRACT_ABI,
+		chainId: 'eip155:8453',
+		functionName: 'transferFrom',
+		args: [passedTo, userAddress ?? inputText as Address, 0n],
+	})
 }
