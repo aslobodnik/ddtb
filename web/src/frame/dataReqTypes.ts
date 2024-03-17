@@ -9,7 +9,7 @@ interface Socials {
 	}
 }
 interface UserAddresses {
-	userAssociatedAddresses: Address
+	userAssociatedAddresses: Address[]
 }
 
 export interface AirstackEnsData {

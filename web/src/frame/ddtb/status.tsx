@@ -34,8 +34,11 @@ export const statusScreen = async (c: FrameContext) => {
 
 	// get all user verified addresses
 	const userAddresses = await fetchEthAddressesFromFid(fid)
+
+	console.log(passedTo)
+	console.log(JSON.stringify(userAddresses))
 	// return true if one of the addresses matches
-	const hasBase = userAddresses.some((address) => (passedTo === address.userAssociatedAddresses))
+	const hasBase = userAddresses[0].userAssociatedAddresses.some((address) => (passedTo === address))
 
 	console.log("3")
 	// game is active if time remaining is less than 12 hours
