@@ -30,7 +30,6 @@ export const startScreen = async (c: FrameContext) => {
 		),
 		intents: [
 			<Button action="/rules-screen-1">Rules</Button>,
-			<Button action="/stats">Stats</Button>,
 			<Button action="/status">Start</Button>,
 		]
 	})
