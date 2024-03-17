@@ -9,10 +9,10 @@ export async function getCurrentGameState() {
 	const lastTransfer = transfers.find((transfer) => transfer.timestamp.toString() === maxTimestamp.toString())
 	console.log(lastTransfer)
 	const currentGameState = {
-		passedFrom: (!lastTransfer) ? lastTransfer!.from : transfers[0].from,
-		passedTo: (!lastTransfer) ? lastTransfer!.to : transfers[0].to,
-		timestamp: (!lastTransfer) ? lastTransfer!.timestamp : transfers[0].timestamp,
-		tokenId: (!lastTransfer) ? lastTransfer!.tokenId : transfers[0].tokenId,
+		passedFrom: (lastTransfer) ? lastTransfer.from : transfers[0].from,
+		passedTo: (lastTransfer) ? lastTransfer.to : transfers[0].to,
+		timestamp: (lastTransfer) ? lastTransfer.timestamp : transfers[0].timestamp,
+		tokenId: (lastTransfer) ? lastTransfer.tokenId : transfers[0].tokenId,
 	} as GameState
 	return currentGameState
 }
