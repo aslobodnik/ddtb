@@ -1,5 +1,6 @@
 import { Button, FrameContext } from "frog"
-import { getEthAddressFromFid, getGameState } from "../hub"
+import { fetchEnsNamesFromAddresses, fetchEthAddressesFromFid } from "../hub"
+import { getCurrentGameState, getTimestampInSeconds, checkIfGameIsActive, formatTimeRemaining } from "../utils"
 
 export const statusScreen = async (c: FrameContext) => {
 
@@ -7,15 +8,32 @@ export const statusScreen = async (c: FrameContext) => {
   const { frameData } = c
   const { fid } = frameData as { fid: number }
 	
-	// get verified addresses from fid
-	const userAddress = await getEthAddressFromFid(fid)
+	// get current game state
+	const { passedFrom, passedTo, timestamp } = await getCurrentGameState()
+
+	let passedFromEns: string | null = ''
+	let passedToEns = ''
+	if (passedFrom === "0x0000000000000000000000000000000000000000") {
+		const name = await fetchEnsNamesFromAddresses([passedTo])
+		passedFromEns = null
+		passedToEns = name.filter((name) => name.owner === passedTo)[0].name
+	} else {
+		const names = await fetchEnsNamesFromAddresses([passedFrom, passedTo])
+		passedFromEns = names.filter((name) => name.owner === passedFrom)[0].name
+		passedToEns = names.filter((name) => name.owner === passedTo)[0].name
+	}
 	
-	// check if the user currently has the base
-	const hasBase = true // placeholder value   // viemClient.readContract({...})
+	// get all user verified addresses
+	const userAddresses = await fetchEthAddressesFromFid(fid)
+	// return true if one of the addresses matches
+	const hasBase = userAddresses.some((address) => (passedTo === address.userAssociatedAddresses))
 
-	const { passedFrom, passedTo, timeRemaining } = await getGameState()
+	// game is active if time remaining is less than 12 hours
+	const timeRemaining = (43200 - (getTimestampInSeconds() - timestamp))
+	const isGameActive = checkIfGameIsActive(timeRemaining, 12)
+	
+	const formattedTimeString = formatTimeRemaining(timeRemaining)
 
-	const isGameActive = checkIsGameActive(timeRemaining)
 	if (isGameActive) {
 		return c.res({
 			image: (
@@ -31,10 +49,10 @@ export const statusScreen = async (c: FrameContext) => {
 				}}>
 					<div style={{
 						display: 'flex'
-					}}>{passedFrom} passed the base to {passedTo}</div>
+					}}>{passedFromEns ? `${passedFromEns} passed the base to ${passedToEns}` : `${passedToEns} was passed the first base!`}</div>
 					<div style={{
 						display: 'flex'
-					}}>{passedTo} has {timeRemaining} to pass the BASE</div>
+					}}>{passedToEns} has {formattedTimeString} to pass the BASE</div>
 				</div>
 			),
 			intents: [
@@ -42,7 +60,7 @@ export const statusScreen = async (c: FrameContext) => {
 				hasBase ? (
 					<Button action='/pass'>Pass</Button>
 				) : (
-					<Button.Link href={`https://warpcast.com/${passedTo}`}>Remind {passedTo}</Button.Link>
+					<Button.Link href={`https://warpcast.com/${passedToEns}`}>Remind {passedToEns}</Button.Link>
 				),
 			]
 		})

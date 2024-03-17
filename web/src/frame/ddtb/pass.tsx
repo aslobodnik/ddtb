@@ -13,7 +13,7 @@ export const passScreen = (c: FrameContext) => {
 				backgroundColor: 'red',
 				justifyContent: 'center',
 			}}>
-				Enter the username of the user you want to pass to
+				Enter the ens name or address of the user you want to pass to
 			</div>
     ),
     intents: [
