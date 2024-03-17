@@ -19,7 +19,6 @@ export async function fetchEthAddressesFromFid(fid: number) {
 			method: 'POST',
 			headers: {
         'Content-Type': 'application/json',
-				'Authorization': AIRSTACK_API_KEY,
       },
 			body: JSON.stringify({ query: query }),
 		}
@@ -44,8 +43,7 @@ export async function fetchEnsNamesFromAddresses(addresses: Address[]) {
 		AIRSTACK_URL, {
 			method: 'POST',
 			headers: {
-        'Content-Type': 'application/json',
-				'Authorization': AIRSTACK_API_KEY,
+        'Content-Type': 'application/json'
       },
 			body: JSON.stringify({ query }),
 		}
