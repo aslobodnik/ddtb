@@ -17,10 +17,10 @@ export const statusScreen = async (c: FrameContext) => {
 
   // const isGameActive = checkIsGameActive(timeRemaining);
 
-  const isGameActive = false;
+  const isGameActive = true;
   const passedFrom = "ncale.eth";
   const passedTo = "greg";
-  const timeRemaining = "1 hour and 10 minutes";
+  const timeRemaining = "00h:07m:23s";
 
   const pfp1 = "https://gregskril.com/img/profile.jpg";
   const pfp2 = "https://euc.li/goerli/swagalicious.eth";
