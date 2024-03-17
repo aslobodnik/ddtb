@@ -21,7 +21,7 @@ export const statusScreen = async (c: FrameContext) => {
 	let fromUser: string | null = ''
 	let toUser = ''
 	console.log('test 1')
-	if (burnerAddressPattern.test("0x0000000000000000000000000000000000000000")) {
+	if (burnerAddressPattern.test(passedFrom)) {
 		const name = await fetchEnsNamesFromAddresses([passedTo])
 		fromUser = ''
 		toUser = name.filter((name) => name.owner === passedTo)[0].name
@@ -35,8 +35,6 @@ export const statusScreen = async (c: FrameContext) => {
 	// get all user verified addresses
 	const userAddresses = await fetchEthAddressesFromFid(fid)
 
-	console.log(passedTo)
-	console.log(JSON.stringify(userAddresses))
 	// return true if one of the addresses matches
 	const hasBase = userAddresses[0].userAssociatedAddresses.some((address) => (passedTo === address))
 
