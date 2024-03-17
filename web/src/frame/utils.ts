@@ -2,26 +2,35 @@ import { Address } from "viem"
 import { fetchTransfers } from "./hub"
 
 export async function getCurrentGameState() {
-	const transfers = await fetchTransfers()
-	const lastTransfer = transfers[transfers.length - 1]
-	
-	const formattedTransfer = { 
+	const transfers = await fetchTransfers(0) // hardcode tokenId 0
+	const lastTransfer = transfers[0]
+	const currentGameState = { 
 		passedFrom: lastTransfer.from,
 		passedTo: lastTransfer.to,
-		timeRemaining: lastTransfer.timestamp,
-	} as FormattedTransfer
-	
-	return formattedTransfer
+		timestamp: lastTransfer.timestamp,
+		tokenId: lastTransfer.tokenId,
+	} as GameState
+	return currentGameState
 }
-
-interface FormattedTransfer {
+interface GameState {
 	passedFrom: Address
 	passedTo: Address
-	timeRemaining: number
+	timestamp: number
+	tokenId: number
 }
 
-function checkIsGameActive(timeRemaining: Date) {
-	// ...
+export function getTimestampInSeconds () {
+  return Math.floor(Date.now() / 1000)
+}
 
-	return true
+export function checkIfGameIsActive(secondsRemaining: number, expiresAfterNumHours: number = 12) {
+	const hours = secondsRemaining / 60 / 60
+	return (hours < expiresAfterNumHours)
+}
+
+export function formatTimeRemaining(seconds: number) {
+	const date = new Date(0)
+	date.setSeconds(seconds)
+	const timeString = date.toISOString().substring(11, 19)
+	return timeString
 }
