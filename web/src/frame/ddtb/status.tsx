@@ -57,43 +57,43 @@ export const statusScreen = async (c: FrameContext) => {
             style={{ position: "absolute", left: 0, bottom: 0, width: "100%" }}
           />
 
-<img
-          src={pfp1}
-          style={{
-            position: "absolute",
-            left: 100,
-            bottom: 250,
-            width: "4rem",
-            height: "4rem",
-            objectFit: "cover",
-            border: "2px solid black",
-            borderRadius: 1000,
-          }}
-        />
+					<img
+						src={pfp1}
+						style={{
+							position: "absolute",
+							left: 100,
+							bottom: 250,
+							width: "4rem",
+							height: "4rem",
+							objectFit: "cover",
+							border: "2px solid black",
+							borderRadius: 1000,
+						}}
+        	/>
 
-        <img
-          src={pfp2}
-          style={{
-            position: "absolute",
-            left: 410,
-            bottom: 252,
-            width: "4rem",
-            height: "4rem",
-            objectFit: "cover",
-            border: "2px solid black",
-            borderRadius: 1000,
-          }}
-        />
+					<img
+						src={pfp2}
+						style={{
+							position: "absolute",
+							left: 410,
+							bottom: 252,
+							width: "4rem",
+							height: "4rem",
+							objectFit: "cover",
+							border: "2px solid black",
+							borderRadius: 1000,
+						}}
+					/>
 
           <div
             style={{
               fontSize: "3.5rem",
               display: "flex",
-			  alignItems: 'center',
+			  			alignItems: 'center',
               flexDirection: "column",
             }}
           >
-              {fromUser} passed the base to {toUser}
+						{fromUser} passed the base to {toUser}
           </div>
 
           <span
@@ -105,7 +105,7 @@ export const statusScreen = async (c: FrameContext) => {
               top: 380,
             }}
           >
-            {toUser} has {timeRemaining} to pass the base
+            {toUser} has {formattedTimeString} to pass the base
           </span>
         </div>
       ),
