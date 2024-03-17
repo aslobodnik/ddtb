@@ -3,12 +3,16 @@ import { fetchTransfers } from "./hub"
 
 export async function getCurrentGameState() {
 	const transfers = await fetchTransfers(0) // hardcode tokenId 0
-	const lastTransfer = transfers[0]
-	const currentGameState = { 
-		passedFrom: lastTransfer.from,
-		passedTo: lastTransfer.to,
-		timestamp: lastTransfer.timestamp,
-		tokenId: lastTransfer.tokenId,
+	console.log(transfers)
+	const maxTimestamp = transfers.reduce((a, b) => Math.max(a, b.timestamp), -Infinity)
+	console.log(maxTimestamp)
+	const lastTransfer = transfers.find((transfer) => transfer.timestamp.toString() === maxTimestamp.toString())
+	console.log(lastTransfer)
+	const currentGameState = {
+		passedFrom: (!lastTransfer) ? lastTransfer!.from : transfers[0].from,
+		passedTo: (!lastTransfer) ? lastTransfer!.to : transfers[0].to,
+		timestamp: (!lastTransfer) ? lastTransfer!.timestamp : transfers[0].timestamp,
+		tokenId: (!lastTransfer) ? lastTransfer!.tokenId : transfers[0].tokenId,
 	} as GameState
 	return currentGameState
 }
