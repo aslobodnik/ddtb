@@ -924,10 +924,10 @@ find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
-frog@latest:
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/frog/-/frog-0.6.4.tgz#fed16cd551932f8c86d247deaa26b411aa187599"
-  integrity sha512-gQs1zDvD9GTZ88Qoiib2PK6g8FygI11mELtRQzvUbOcObbUeI+2IRVGrtfr31TIFcZtYFf4cDz5VCsftDGH6PQ==
+frog@^0.6.5:
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/frog/-/frog-0.6.5.tgz#4060b5fe3a1353b1dd70e930c9d9ea771ba5f2fc"
+  integrity sha512-fJ5kq+hozTAZFJKfH7ToXtSwMjRpQ2SidnZfoEN5CnLBTlU7PEZolbXlqfueQao4CwtFph16AwAMeOI7lyqs2A==
   dependencies:
     "@bufbuild/protobuf" "^1.7.2"
     "@hono/vite-dev-server" "0.7.0"
@@ -1016,7 +1016,7 @@ hono-og@0.0.26:
     "@vercel/og" "~0.6.2"
     workers-og "~0.0.23"
 
-hono@^4:
+hono@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/hono/-/hono-4.1.0.tgz#62cef81df0dbf731643155e1e5c1b9dffb230dc4"
   integrity sha512-9no6DCHb4ijB1tWdFXU6JnrnFgzwVZ1cnIcS1BjAFnMcjbtBTOMsQrDrPH3GXbkNEEEkj8kWqcYBy8Qc0bBkJQ==
