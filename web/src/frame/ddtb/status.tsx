@@ -1,26 +1,32 @@
 import { Button, FrameContext } from "frog"
 import { fetchEnsNamesFromAddresses, fetchEthAddressesFromFid } from "../hub"
 import { getCurrentGameState, getTimestampInSeconds, checkIfGameIsActive, formatTimeRemaining } from "../utils"
+import { ruleStyles } from "./styles";
 
 export const statusScreen = async (c: FrameContext) => {
+  
+  const pfp1 = "https://gregskril.com/img/profile.jpg";
+  const pfp2 = "https://euc.li/goerli/swagalicious.eth";
+  const uniqueAddresses = 20;
+  const aliveTime = "2 days 23 hours and 21 minutes";
 
-	// get user fid from signed POST req
+  // get user fid from signed POST req
   const { frameData } = c
   const { fid } = frameData as { fid: number }
 	
 	// get current game state
 	const { passedFrom, passedTo, timestamp } = await getCurrentGameState()
 
-	let passedFromEns: string | null = ''
-	let passedToEns = ''
-	if (passedFrom === "0x0000000000000000000000000000000000000000") {
+	let fromUser: string | null = ''
+	let toUser = ''
+	if (fromUser === "0x0000000000000000000000000000000000000000") {
 		const name = await fetchEnsNamesFromAddresses([passedTo])
-		passedFromEns = null
-		passedToEns = name.filter((name) => name.owner === passedTo)[0].name
+		fromUser = null
+		toUser = name.filter((name) => name.owner === passedTo)[0].name
 	} else {
 		const names = await fetchEnsNamesFromAddresses([passedFrom, passedTo])
-		passedFromEns = names.filter((name) => name.owner === passedFrom)[0].name
-		passedToEns = names.filter((name) => name.owner === passedTo)[0].name
+		fromUser = names.filter((name) => name.owner === passedFrom)[0].name
+		toUser = names.filter((name) => name.owner === passedTo)[0].name
 	}
 	
 	// get all user verified addresses
@@ -33,63 +39,154 @@ export const statusScreen = async (c: FrameContext) => {
 	const isGameActive = checkIfGameIsActive(timeRemaining, 12)
 	
 	const formattedTimeString = formatTimeRemaining(timeRemaining)
+        
+  if (isGameActive) {
+    return c.res({
+      image: (
+        <div
+          style={{
+            ...ruleStyles,
+            paddingTop: 110,
+            alignItems: "stretch",
+            justifyContent: "flex-start",
+            flexDirection: "column",
+          }}
+        >
+          <img
+            src="https://i.imgur.com/O7Ncgpv.png"
+            style={{ position: "absolute", left: 0, bottom: 0, width: "100%" }}
+          />
 
-	if (isGameActive) {
-		return c.res({
-			image: (
-				<div style={{ 
-					display: 'flex',
-					flexDirection: 'column',
-					width: '100vw',
-					height: '100vh',
-					color: 'white', 
-					fontSize: '50',
-					alignItems: 'center',
-					justifyContent: 'center',
-				}}>
-					<div style={{
-						display: 'flex'
-					}}>{passedFromEns ? `${passedFromEns} passed the base to ${passedToEns}` : `${passedToEns} was passed the first base!`}</div>
-					<div style={{
-						display: 'flex'
-					}}>{passedToEns} has {formattedTimeString} to pass the BASE</div>
-				</div>
-			),
-			intents: [
-				<Button action='/rules-screen-1'>Rules</Button>,
-				hasBase ? (
-					<Button action='/pass'>Pass</Button>
-				) : (
-					<Button.Link href={`https://warpcast.com/${passedToEns}`}>Remind {passedToEns}</Button.Link>
-				),
-			]
-		})
-	}
-	
-	// return this if there is no active game
-	return c.res({
+<img
+          src={pfp1}
+          style={{
+            position: "absolute",
+            left: 100,
+            bottom: 250,
+            width: "4rem",
+            height: "4rem",
+            objectFit: "cover",
+            border: "2px solid black",
+            borderRadius: 1000,
+          }}
+        />
+
+        <img
+          src={pfp2}
+          style={{
+            position: "absolute",
+            left: 410,
+            bottom: 252,
+            width: "4rem",
+            height: "4rem",
+            objectFit: "cover",
+            border: "2px solid black",
+            borderRadius: 1000,
+          }}
+        />
+
+          <div
+            style={{
+              fontSize: "3.5rem",
+              display: "flex",
+			  alignItems: 'center',
+              flexDirection: "column",
+            }}
+          >
+              {fromUser} passed the base to {toUser}
+          </div>
+
+          <span
+            style={{
+              position: "absolute",
+              fontSize: "2.5rem",
+              maxWidth: 500,
+              right: 70,
+              top: 380,
+            }}
+          >
+            {toUser} has {timeRemaining} to pass the base
+          </span>
+        </div>
+      ),
+      intents: [
+        <Button action="/">Home</Button>,
+        hasBase ? (
+          <Button action="/pass">Pass</Button>
+        ) : (
+          <Button.Link href={`https://warpcast.com/~/compose?text=Hey%20@${toUser}%2C%20don%27t%20drop%20the%20Base`}>
+            Let Them Know
+          </Button.Link>
+        ),
+      ],
+    });
+  }
+
+  // return this if there is no active game
+  return c.res({
     image: (
-      <div style={{ 
-				display: 'flex',
-				flexDirection: 'column',
-				width: '100vw',
-				height: '100vh',
-				color: 'white', 
-				fontSize: '50',
-				alignItems: 'center',
-				justifyContent: 'center',
-			}}>
-				<div style={{
-					display: 'flex'
-				}}>{passedFrom} passed the base to {passedTo}</div>
-				<div style={{
-					display: 'flex'
-				}}>{passedTo} dropped it</div>
-			</div>
+		<div
+        style={{
+          ...ruleStyles,
+          paddingTop: 80,
+          alignItems: "stretch",
+          justifyContent: "flex-start",
+        }}
+      >
+        <img
+          src="https://i.imgur.com/xDknA3X.png"
+          style={{ position: "absolute", left: 0, bottom: 0, width: "100%" }}
+        />
+
+        <img
+          src={pfp1}
+          style={{
+            position: "absolute",
+            left: 110,
+            bottom: 220,
+            width: "4rem",
+            height: "4rem",
+            objectFit: "cover",
+            border: "2px solid black",
+            borderRadius: 1000,
+          }}
+        />
+
+        <img
+          src={pfp2}
+          style={{
+            position: "absolute",
+            left: 390,
+            bottom: 220,
+            width: "4rem",
+            height: "4rem",
+            objectFit: "cover",
+            border: "2px solid black",
+            borderRadius: 1000,
+          }}
+        />
+
+        <span style={{ fontSize: "4rem" }}>
+          {fromUser} passed the BASE to {toUser} and they dropped it :(
+        </span>
+
+        <span
+          style={{
+            position: "absolute",
+            fontSize: "2.5rem",
+            maxWidth: 500,
+            right: 70,
+            top: 330,
+          }}
+        >
+          The BASE was passed to {uniqueAddresses} unique people and was alive
+          for {aliveTime}
+        </span>
+      </div>
     ),
     intents: [
-      <Button action='/rules-screen-1'>Rules</Button>,
-			<Button action="/pass">Start New Game</Button>,
-    ]
-  })
-}
+      <Button action="/">Home</Button>,
+      <Button action="/pass">Start New Game</Button>,
+    ],
+  });
+};
