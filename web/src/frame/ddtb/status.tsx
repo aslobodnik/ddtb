@@ -17,30 +17,35 @@ export const statusScreen = async (c: FrameContext) => {
 	// get current game state
 	const { passedFrom, passedTo, timestamp } = await getCurrentGameState()
 
-	const burnerAddressPattern = new RegExp('/0x000000000000000/')
+	const burnerAddressPattern = new RegExp('0x000000000000000')
 	let fromUser: string | null = ''
 	let toUser = ''
+	console.log('test 1')
 	if (burnerAddressPattern.test("0x0000000000000000000000000000000000000000")) {
 		const name = await fetchEnsNamesFromAddresses([passedTo])
-		fromUser = null
+		fromUser = ''
 		toUser = name.filter((name) => name.owner === passedTo)[0].name
 	} else {
 		const names = await fetchEnsNamesFromAddresses([passedFrom, passedTo])
 		fromUser = names.filter((name) => name.owner === passedFrom)[0].name
 		toUser = names.filter((name) => name.owner === passedTo)[0].name
 	}
-	
+	console.log('2')
+
 	// get all user verified addresses
 	const userAddresses = await fetchEthAddressesFromFid(fid)
 	// return true if one of the addresses matches
 	const hasBase = userAddresses.some((address) => (passedTo === address.userAssociatedAddresses))
 
+	console.log("3")
 	// game is active if time remaining is less than 12 hours
 	const timeRemaining = (43200 - (getTimestampInSeconds() - timestamp))
 	const isGameActive = checkIfGameIsActive(timeRemaining, 12)
 	
+	console.log('4')
 	const formattedTimeString = formatTimeRemaining(timeRemaining)
-        
+  
+	console.log('5')
   if (isGameActive) {
     return c.res({
       image: (
@@ -51,8 +56,7 @@ export const statusScreen = async (c: FrameContext) => {
             alignItems: "stretch",
             justifyContent: "flex-start",
             flexDirection: "column",
-          }}
-        >
+          }}>
           <img
             src="https://i.imgur.com/O7Ncgpv.png"
             style={{ position: "absolute", left: 0, bottom: 0, width: "100%" }}
@@ -123,71 +127,71 @@ export const statusScreen = async (c: FrameContext) => {
     });
   }
 
-  // return this if there is no active game
-  return c.res({
-    image: (
-		<div
-        style={{
-          ...ruleStyles,
-          paddingTop: 80,
-          alignItems: "stretch",
-          justifyContent: "flex-start",
-        }}
-      >
-        <img
-          src="https://i.imgur.com/xDknA3X.png"
-          style={{ position: "absolute", left: 0, bottom: 0, width: "100%" }}
-        />
-
-        <img
-          src={pfp1}
-          style={{
-            position: "absolute",
-            left: 110,
-            bottom: 220,
-            width: "4rem",
-            height: "4rem",
-            objectFit: "cover",
-            border: "2px solid black",
-            borderRadius: 1000,
-          }}
-        />
-
-        <img
-          src={pfp2}
-          style={{
-            position: "absolute",
-            left: 390,
-            bottom: 220,
-            width: "4rem",
-            height: "4rem",
-            objectFit: "cover",
-            border: "2px solid black",
-            borderRadius: 1000,
-          }}
-        />
-
-        <span style={{ fontSize: "4rem" }}>
-          {fromUser} passed the BASE to {toUser} and they dropped it :(
-        </span>
-
-        <span
-          style={{
-            position: "absolute",
-            fontSize: "2.5rem",
-            maxWidth: 500,
-            right: 70,
-            top: 330,
-          }}
-        >
-          The BASE was passed to {uniqueAddresses} unique people and was alive
-          for {aliveTime}
-        </span>
-      </div>
-    ),
-    intents: [
-      <Button action="/">Home</Button>,
-      <Button action="/pass">Start New Game</Button>,
-    ],
-  });
-};
+	  // return this if there is no active game
+		return c.res({
+			image: (
+			<div
+				style={{
+					...ruleStyles,
+					paddingTop: 80,
+					alignItems: "stretch",
+					justifyContent: "flex-start",
+				}}>
+					<img
+						src="https://i.imgur.com/xDknA3X.png"
+						style={{ position: "absolute", left: 0, bottom: 0, width: "100%" }}
+					/>
+	
+					<img
+						src={pfp1}
+						style={{
+							position: "absolute",
+							left: 110,
+							bottom: 220,
+							width: "4rem",
+							height: "4rem",
+							objectFit: "cover",
+							border: "2px solid black",
+							borderRadius: 1000,
+						}}
+					/>
+	
+					<img
+						src={pfp2}
+						style={{
+							position: "absolute",
+							left: 390,
+							bottom: 220,
+							width: "4rem",
+							height: "4rem",
+							objectFit: "cover",
+							border: "2px solid black",
+							borderRadius: 1000,
+						}}
+					/>
+	
+					<span style={{ fontSize: "4rem" }}>
+						{fromUser} passed the BASE to {toUser} and they dropped it {':('}
+					</span>
+	
+					<span
+						style={{
+							position: "absolute",
+							fontSize: "2.5rem",
+							maxWidth: 500,
+							right: 70,
+							top: 330,
+						}}
+					>
+						The BASE was passed to {uniqueAddresses} unique people and was alive
+						for {aliveTime}
+					</span>
+				</div>
+			),
+			intents: [
+				<Button action="/">Home</Button>,
+				<Button action="/pass">Start New Game</Button>,
+			],
+		});
+	};
+	
