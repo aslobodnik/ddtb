@@ -5,7 +5,7 @@ export const rulesScreen1 = (c: FrameContext) => {
 	return c.res({
     image: (
       <div style={{ ...ruleStyles }}>
-        'Don't drop the BASE' is a game of hot potato on the Base blockchain.
+        "Don't drop the BASE" is a game of hot potato on the Base blockchain.
       </div>
     ),
     intents: [
@@ -52,7 +52,7 @@ export const rulesScreen4 = (c: FrameContext) => {
     ),
     intents: [
       <Button action={'/rules-screen-3'}>Back</Button>,
-      <Button action={'/'}>Next</Button>
+      <Button action={'/'}>Home</Button>
     ]
   })
 }
